@@ -167,18 +167,7 @@
                         <span class="skill-pill bg-[#4ECDC4] text-black px-3 py-1 text-sm">INSTAGRAM</span>
                         <span class="skill-pill bg-[#FFE66D] text-black px-3 py-1 text-sm">BRANDING</span>
                     </div>
-                    <button type="button" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
-
-    <!-- Overlay Modal -->
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
-        <div class="relative w-full max-w-3xl p-4">
-            <button onclick="toggleModal()" class="absolute top-2 right-2 text-white text-2xl">&times;</button>
-            <video autoplay muted controls class="w-full rounded-lg shadow-lg">
-                <source src="your-video.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-    </div>
+                    <a href="#" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</a>
                 </div>
                 
                 <!-- Project 3 -->
@@ -271,12 +260,8 @@
             mobileMenu.classList.toggle('hidden');
         });
         
-       document.addEventListener('click', (e) => {
-    const isClickInsideMenu = menuBtn.contains(e.target) || mobileMenu.contains(e.target);
-    const isClickInsideModal = document.getElementById('videoModal').contains(e.target);
-
-    // Only hide mobile menu if click is outside of it AND not on the modal
-    if (!isClickInsideMenu && !isClickInsideModal) {
+      document.addEventListener('click', (e) => {
+    if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
         mobileMenu.classList.add('hidden');
     }
 });
@@ -295,31 +280,5 @@
             });
         });
     </script>
-  <script>
-    const modal = document.getElementById('videoModal');
-    const video = modal.querySelector('video');
-
-    function openModal() {
-        modal.classList.remove('hidden');
-        video.currentTime = 0;
-        video.play();
-    }
-
-    function closeModal() {
-        modal.classList.add('hidden');
-        video.pause();
-    }
-
-    // Close when clicking the dark background (but NOT the video or close button)
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            closeModal();
-        }
-    });
-
-    // Hook up open button
-    document.querySelector('#work button').addEventListener('click', openModal);
-</script>
-
 </body>
 </html>
