@@ -167,7 +167,7 @@
                         <span class="skill-pill bg-[#4ECDC4] text-black px-3 py-1 text-sm">INSTAGRAM</span>
                         <span class="skill-pill bg-[#FFE66D] text-black px-3 py-1 text-sm">BRANDING</span>
                     </div>
-                    <button onclick="toggleModal()" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
+                    <button type="button" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
 
     <!-- Overlay Modal -->
     <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
@@ -295,20 +295,31 @@
             });
         });
     </script>
-   <script>
-    function toggleModal() {
-        const modal = document.getElementById('videoModal');
-        const video = modal.querySelector('video');
+  <script>
+    const modal = document.getElementById('videoModal');
+    const video = modal.querySelector('video');
 
-        if (modal.classList.contains('hidden')) {
-            modal.classList.remove('hidden');
-            video.currentTime = 0; // Reset to start
-            video.play(); // Autoplay
-        } else {
-            modal.classList.add('hidden');
-            video.pause(); // Stop when closed
-        }
+    function openModal() {
+        modal.classList.remove('hidden');
+        video.currentTime = 0;
+        video.play();
     }
+
+    function closeModal() {
+        modal.classList.add('hidden');
+        video.pause();
+    }
+
+    // Close when clicking the dark background (but NOT the video or close button)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Hook up open button
+    document.querySelector('#work button').addEventListener('click', openModal);
 </script>
+
 </body>
 </html>
