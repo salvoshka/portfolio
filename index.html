@@ -271,12 +271,15 @@
             mobileMenu.classList.toggle('hidden');
         });
         
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
+       document.addEventListener('click', (e) => {
+    const isClickInsideMenu = menuBtn.contains(e.target) || mobileMenu.contains(e.target);
+    const isClickInsideModal = document.getElementById('videoModal').contains(e.target);
+
+    // Only hide mobile menu if click is outside of it AND not on the modal
+    if (!isClickInsideMenu && !isClickInsideModal) {
+        mobileMenu.classList.add('hidden');
+    }
+});
         
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
