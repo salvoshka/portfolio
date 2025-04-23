@@ -292,10 +292,19 @@
             });
         });
     </script>
-    <script>
+   <script>
     function toggleModal() {
         const modal = document.getElementById('videoModal');
-        modal.classList.toggle('hidden');
+        const video = modal.querySelector('video');
+
+        if (modal.classList.contains('hidden')) {
+            modal.classList.remove('hidden');
+            video.currentTime = 0; // Reset to start
+            video.play(); // Autoplay
+        } else {
+            modal.classList.add('hidden');
+            video.pause(); // Stop when closed
+        }
     }
 </script>
 </body>
