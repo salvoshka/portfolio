@@ -363,6 +363,18 @@
         video.pause();
         overlay.classList.add('hidden');
     }
+
+        document.addEventListener('click', function (event) {
+        const overlay = document.getElementById('videoOverlay');
+        const video = document.getElementById('overlayVideo');
+        
+        // Only run if overlay is visible
+        if (!overlay.classList.contains('hidden') && overlay.contains(event.target)) {
+            if (!video.contains(event.target)) {
+                closeVideo();
+            }
+        }
+            });
 </script>
 <script>
   const carousels = {
