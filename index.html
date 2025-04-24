@@ -432,7 +432,15 @@
 
   function updateCarousel() {
     if (!currentCarousel) return;
-    document.getElementById(currentCarousel.imageId).src = currentCarousel.images[currentCarousel.currentIndex];
+    const imgEl = document.getElementById(currentCarousel.imageId);
+    imgEl.src = currentCarousel.images[currentCarousel.currentIndex];
+
+    if (currentCarousel.buttonId && currentCarousel.links) {
+      const btnEl = document.getElementById(currentCarousel.buttonId);
+      if (btnEl) {
+        btnEl.href = currentCarousel.links[currentCarousel.currentIndex];
+      }
+    }
   }
 
   // Optional: click outside to close
@@ -442,6 +450,7 @@
     }
   });
 </script>
+
 
 </body>
 </html>
