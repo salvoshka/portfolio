@@ -81,6 +81,34 @@
             border: 3px solid #222;
             box-shadow: 8px 8px 0px #222;
         }
+
+        .carousel-overlay {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0, 0, 0, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .carousel-inner {
+      position: relative;
+      width: 100%;
+      max-width: 64rem; /* max-w-4xl */
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 0.5rem;
+    }
+        
     </style>
 </head>
 <body class="min-h-screen bg-[#f0f0f0]">
@@ -154,12 +182,12 @@
                         <span class="skill-pill bg-[#4ECDC4] text-black px-3 py-1 text-sm">INSTAGRAM</span>
                         <span class="skill-pill bg-[#FFE66D] text-black px-3 py-1 text-sm">BRANDING</span>
                     </div>
-                    <button onclick="openCarousel()" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
+                    <button onclick="openCarousel('feeds')" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
                 </div>
                 <!-- 🚀 Carousel Overlay -->
-<div id="carouselOverlay" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[9999] hidden">
-    <div class="relative w-full max-w-4xl aspect-video flex items-center justify-center">
-        <img id="carouselImage" src="1.jpg" class="w-full h-full object-contain rounded" alt="Carousel Image">
+<div id="feedsCarouselOverlay" class="carousel-overlay hidden">
+  <div class="carousel-inner">
+    <img id="feedsCarouselImage" src="1.jpg" />
 
         <!-- Prev/Next Buttons -->
         <button onclick="prevImage()" class="absolute left-4 text-white text-3xl font-bold px-2 py-1 bg-black bg-opacity-50 rounded">‹</button>
@@ -207,12 +235,12 @@
                         <span class="skill-pill bg-[#FF6B6B] text-white px-3 py-1 text-sm">HTML/CSS</span>
                         <span class="skill-pill bg-[#4ECDC4] text-black px-3 py-1 text-sm">JAVASCRIPT</span>
                     </div>
-                    <button onclick="openCarousel()" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
+                    <button onclick="openCarousel('web')" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
                 </div>
                 <!-- 🚀 Carousel Overlay -->
-<div id="carouselOverlay" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[9999] hidden">
-    <div class="relative w-full max-w-4xl aspect-video flex items-center justify-center">
-        <img id="carouselImage" src="1.jpg" class="w-full h-full object-contain rounded" alt="Carousel Image">
+<div id="webCarouselOverlay" class="carousel-overlay hidden">
+  <div class="carousel-inner">
+    <img id="webCarouselImage" src="web1.jpg" />
 
         <!-- Prev/Next Buttons -->
         <button onclick="prevImage()" class="absolute left-4 text-white text-3xl font-bold px-2 py-1 bg-black bg-opacity-50 rounded">‹</button>
@@ -336,28 +364,61 @@
         overlay.classList.add('hidden');
     }
 </script>
-    <script>
-    const images = ["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg"]; // Add your image filenames here
-    let currentIndex = 0;
-
-    function openCarousel() {
-        document.getElementById('carouselOverlay').classList.remove('hidden');
-        document.getElementById('carouselImage').src = images[currentIndex];
+<script>
+  const carousels = {
+    feeds: {
+      overlayId: 'feedsCarouselOverlay',
+      imageId: 'feedsCarouselImage',
+      images: ['1.jpg', '2.jpg', '3.jpg'],
+      currentIndex: 0
+    },
+    web: {
+      overlayId: 'webCarouselOverlay',
+      imageId: 'webCarouselImage',
+      images: ['web1.jpg', 'web2.jpg', 'web3.jpg'],
+      currentIndex: 0
     }
+  };
 
-    function closeCarousel() {
-        document.getElementById('carouselOverlay').classList.add('hidden');
-    }
+  let currentCarousel = null;
 
-    function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
-        document.getElementById('carouselImage').src = images[currentIndex];
-    }
+  function openCarousel(name) {
+    currentCarousel = carousels[name];
+    currentCarousel.currentIndex = 0;
+    document.getElementById(currentCarousel.overlayId).classList.remove('hidden');
+    updateCarousel();
+  }
 
-    function prevImage() {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        document.getElementById('carouselImage').src = images[currentIndex];
+  function closeCarousel() {
+    if (currentCarousel) {
+      document.getElementById(currentCarousel.overlayId).classList.add('hidden');
     }
+  }
+
+  function nextImage() {
+    if (!currentCarousel) return;
+    currentCarousel.currentIndex = (currentCarousel.currentIndex + 1) % currentCarousel.images.length;
+    updateCarousel();
+  }
+
+  function prevImage() {
+    if (!currentCarousel) return;
+    currentCarousel.currentIndex = (currentCarousel.currentIndex - 1 + currentCarousel.images.length) % currentCarousel.images.length;
+    updateCarousel();
+  }
+
+  function updateCarousel() {
+    if (!currentCarousel) return;
+    document.getElementById(currentCarousel.imageId).src = currentCarousel.images[currentCarousel.currentIndex];
+  }
+
+  // Optional: click outside to close
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('carousel-overlay')) {
+      closeCarousel();
+    }
+  });
 </script>
+
 </body>
 </html>
