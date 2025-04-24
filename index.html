@@ -207,8 +207,23 @@
                         <span class="skill-pill bg-[#FF6B6B] text-white px-3 py-1 text-sm">HTML/CSS</span>
                         <span class="skill-pill bg-[#4ECDC4] text-black px-3 py-1 text-sm">JAVASCRIPT</span>
                     </div>
-                    <a href="#" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</a>
+                    <button onclick="openCarousel()" class="neo-button bg-black text-white px-4 py-2 inline-block font-bold">SEE PROJECTS</button>
                 </div>
+                <!-- 🚀 Carousel Overlay -->
+<div id="carouselOverlay" class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-[9999] hidden">
+    <div class="relative w-full max-w-4xl aspect-video flex items-center justify-center">
+        <img id="carouselImage" src="1.jpg" class="w-full h-full object-contain rounded" alt="Carousel Image">
+
+        <!-- Prev/Next Buttons -->
+        <button onclick="prevImage()" class="absolute left-4 text-white text-3xl font-bold px-2 py-1 bg-black bg-opacity-50 rounded">‹</button>
+        <button onclick="nextImage()" class="absolute right-4 text-white text-3xl font-bold px-2 py-1 bg-black bg-opacity-50 rounded">›</button>
+
+        <!-- Close Button -->
+        <button onclick="closeCarousel()" class="absolute top-2 right-2 bg-white text-black px-3 py-1 font-bold rounded shadow">
+            ✕
+        </button>
+    </div>
+</div>
             </div>
         </div>
     </section>
